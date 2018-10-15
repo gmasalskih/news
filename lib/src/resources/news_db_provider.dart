@@ -4,6 +4,7 @@ import 'package:news/src/resources/repository.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'dart:async';
 
 class NewsDbProvider implements Source, Cache {
   Database db;
