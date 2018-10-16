@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 
 void main() {
   test('', () async {
-    final newsApi = NewsApiProvider();
+    final newsApi = newsApiProvider;
     newsApi.client = MockClient((request) async {
       return Response(json.encode([1, 2, 3, 4]), 200);
     });
@@ -16,7 +16,7 @@ void main() {
   });
 
   test('', () async {
-    final newsApi = NewsApiProvider();
+    final newsApi = newsApiProvider;
     newsApi.client = MockClient((request) async {
       final jsonMap = {'id':123};
       return Response(json.encode(jsonMap), 200);
