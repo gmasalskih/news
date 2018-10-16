@@ -6,21 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 
-class NewsDbProvider implements Source, Cache {
-  Database db;
-
-  NewsDbProvider(){
-    init();
-  }
-
-  init() async {
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    final path = join(documentsDirectory.path, 'items.db');
-    db = await openDatabase(
-      path,
-      version: 1,
-      onCreate: (Database newDb, int version) {
-        newDb.execute("""
+const _QUERY_INIT_DB = """
         CREATE TABLE Items(
         id INTEGER PRIMARY KEY,
         deleted INTEGER,
@@ -35,7 +21,23 @@ class NewsDbProvider implements Source, Cache {
         score INTEGER,
         title TEXT,
         descendants INTEGER)
-        """);
+        """;
+
+class NewsDbProvider implements Source, Cache {
+  Database db;
+
+  NewsDbProvider() {
+    init();
+  }
+
+  init() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    final path = join(documentsDirectory.path, 'items.db');
+    db = await openDatabase(
+      path,
+      version: 1,
+      onCreate: (Database newDb, int version) {
+        newDb.execute(_QUERY_INIT_DB);
       },
     );
   }
@@ -55,9 +57,16 @@ class NewsDbProvider implements Source, Cache {
   }
 
   @override
-  Future<int> addItem(ItemModel item) {
-//    return null;
-    return db.insert('Items', item.toMap());
+  Future<int> addItem(ItemModel item) async {
+    try {
+      int i;
+      if (await fetchItem(item.id) == null)
+        i = await db.insert('Items', item.toMap());
+      return i;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 
   @override

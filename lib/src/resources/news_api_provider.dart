@@ -6,7 +6,7 @@ import 'package:news/src/resources/repository.dart';
 
 final _root = 'https://hacker-news.firebaseio.com/v0';
 
-class NewsApiProvider implements Source {
+class _NewsApiProvider implements Source {
   Client client = Client();
 
   @override
@@ -23,3 +23,5 @@ class NewsApiProvider implements Source {
     return ItemModel.fromJson(parsedJson);
   }
 }
+
+final _NewsApiProvider newsApiProvider = _NewsApiProvider();

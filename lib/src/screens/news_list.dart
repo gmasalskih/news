@@ -38,29 +38,4 @@ class NewsList extends StatelessWidget {
       },
     );
   }
-
-//  Widget buildList() {
-////    Text('Show some news here!');
-//    return ListView.builder(
-//      itemCount: 1000,
-//      itemBuilder: (BuildContext context, int index) {
-//        return FutureBuilder(
-//          future: getFuture(),
-//          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-//            debugPrint(index.toString());
-//            return snapshot.hasData
-//                ? Text(snapshot.data)
-//                : Text('Not yet data');
-//          },
-//        );
-//      },
-//    );
-//  }
-//
-//  Future<String> getFuture() {
-//    return Future.delayed(
-//      Duration(seconds: 2),
-//      () => 'hi',
-//    );
-//  }
 }
