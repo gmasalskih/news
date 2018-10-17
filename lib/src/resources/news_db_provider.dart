@@ -60,8 +60,9 @@ class NewsDbProvider implements Source, Cache {
   Future<int> addItem(ItemModel item) async {
     try {
       int i;
-      if (await fetchItem(item.id) == null)
+      if (await fetchItem(item.id) == null){
         i = await db.insert('Items', item.toMap());
+      }
       return i;
     } catch (e) {
       print(e.toString());
@@ -71,6 +72,10 @@ class NewsDbProvider implements Source, Cache {
 
   @override
   Future<List<int>> fetchTopIds() => null;
+
+  Future<int> clear(){
+    return db.delete('Items');
+  }
 }
 
 final NewsDbProvider newsDbProvider = NewsDbProvider();
