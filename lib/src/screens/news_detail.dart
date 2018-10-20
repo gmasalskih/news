@@ -24,9 +24,37 @@ class NewsDetail extends StatelessWidget {
     return StreamBuilder(
       stream: bloc.itemWithComments,
       builder: (BuildContext context,
-          AsyncSnapshot<Map<int, Future<ItemModel>>> snapshot) {
-
+          AsyncSnapshot<Map<int, Future<ItemModel>>> mapSnapshot) {
+        if (!mapSnapshot.hasData) {
+          return Text('Loading');
+        }
+        final itemFuture = mapSnapshot.data[id];
+        return FutureBuilder(
+          future: itemFuture,
+          builder:
+              (BuildContext context, AsyncSnapshot<ItemModel> itemSnapshot) {
+            if (!itemSnapshot.hasData) {
+              return Text('Loading');
+            }
+            return buildTitle(itemSnapshot.data);
+          },
+        );
       },
+    );
+  }
+
+  Widget buildTitle(ItemModel item) {
+    return Container(
+      margin: EdgeInsets.all(10.0),
+      alignment: Alignment.topCenter,
+      child: Text(
+        item.title,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold
+        ),
+      ),
     );
   }
 }

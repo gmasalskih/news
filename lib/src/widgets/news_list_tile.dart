@@ -39,8 +39,9 @@ class NewsListTile extends StatelessWidget {
   Widget buildTile(BuildContext context, ItemModel item) {
     return Card(
       child: ListTile(
-        onTap: (){
+        onTap: () {
           Navigator.pushNamed(context, '/${item.id}');
+
         },
         title: Text(item.title),
         subtitle: Row(
@@ -55,7 +56,6 @@ class NewsListTile extends StatelessWidget {
             Text('${item.descendants}'),
           ],
         ),
-        
       ),
     );
 //    return ListTile(
